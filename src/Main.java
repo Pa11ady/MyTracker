@@ -1,9 +1,10 @@
 import java.util.Scanner;
 
 public class Main {
+    private final static Scanner scanner = new Scanner(System.in);
+    private final static StepTracker stepTracker = new StepTracker();
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             printMenu();
             int command = scanner.nextInt();
@@ -15,10 +16,7 @@ public class Main {
                     PrintStatisticsForMonth();
                     break;
                 case 3:
-                    EditCountStepsForDay();
-                    break;
-                case 4:
-                    PrintMonthlyReports();
+                    EditGoalCountStepsForDay();
                     break;
                 case 0:
                     System.out.println("0 - Выйти из приложения");
@@ -36,25 +34,50 @@ public class Main {
         System.out.println("1 - Ввести количество шагов за день");
         System.out.println("2 - Напечатать статистику за месяц");
         System.out.println("3 - Изменить цель по количеству шагов в день");
-        System.out.println("4 - Вывести информацию о всех месячных отчётах");
         System.out.println("0 - Выйти из приложения");
         System.out.println("================================================");
     }
 
     private static void inputCountStepsForDay() {
-        System.out.println("1 - Ввести количество шагов за день");
+        int month;
+        int day;
+        int steps;
+        do {
+            System.out.println("Введите номер месяца с 1 - 12");
+            month = scanner.nextInt();
+        } while (month < 1|| month > 12);
+        do {
+            System.out.println("Введите день с 1 - 30");
+            day = scanner.nextInt();
+        } while (day < 1 || day > 30);
+        do {
+            System.out.println("Введите неотрицательное число шагов");
+            steps = scanner.nextInt();
+        } while (steps < 0);
+        stepTracker.setSteps(month, day, steps);
     }
 
     private static void PrintStatisticsForMonth() {
-        System.out.println("2 - Напечатать статистику за месяц");
+        int month;
+        do {
+            System.out.println("Введите номер месяца с 1 - 12");
+            month = scanner.nextInt();
+        } while (1 > month || month > 12);
+        if (stepTracker.hasMonth(month)) {
+            System.out.println("Нет статистики по такому месяцу");
+            return;
+        }
+        System.out.println("Всё ок");
     }
 
-    private static void EditCountStepsForDay() {
+    private static void EditGoalCountStepsForDay() {
+        int goalSteps;
         System.out.println("3 - Изменить цель по количеству шагов в день");
-    }
-
-    private static void PrintMonthlyReports() {
-        System.out.println("4 - Вывести информацию о всех месячных отчётах");
+        do {
+            System.out.println("Введите неотрицательное число шагов");
+            goalSteps = scanner.nextInt();
+        } while (goalSteps < 0);
+        stepTracker.setGoalSteps(goalSteps);
     }
 }
 
