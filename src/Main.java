@@ -5,6 +5,8 @@ public class Main {
     private final static StepTracker stepTracker = new StepTracker();
 
     public static void main(String[] args) {
+        stepTracker.initTestData(); //!!!!!! тест
+
         while (true) {
             printMenu();
             int command = scanner.nextInt();
@@ -63,11 +65,19 @@ public class Main {
             System.out.println("Введите номер месяца с 1 - 12");
             month = scanner.nextInt();
         } while (1 > month || month > 12);
-        if (stepTracker.hasMonth(month)) {
+
+        Integer[] monthDate = stepTracker.getMonthDate(month);
+        if (monthDate == null) {
             System.out.println("Нет статистики по такому месяцу");
             return;
         }
-        System.out.println("Всё ок");
+        int cntDays = monthDate.length;
+        for (int i = 0; i < cntDays - 1; i++) {
+            System.out.printf("%d день: %d, ", i + 1,  monthDate[i]);
+        }
+        System.out.printf("%d день: %d\n",  cntDays,   monthDate[cntDays-1]);
+        System.out.println("===");
+        stepTracker.printDateTest(month);
     }
 
     private static void EditGoalCountStepsForDay() {
