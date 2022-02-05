@@ -51,8 +51,22 @@ public class StepTracker {
     }
 
     public  int getBestSeries(int month) {
+        Integer[] monthData = monthDataMap.get(month);
+        if (monthData == null) return 0;
+        int maxSeries = 0;
+        int curSeries = 0;
+        for (int steps : monthData) {
+            if (steps >= goalSteps) {
+                curSeries++;
+            } else {
+                curSeries = 0;
+            }
+            if (maxSeries < curSeries) {
+                maxSeries = curSeries;
+            }
+        }
+        return maxSeries;
     }
-
 
     public void printDateTest(int month) { //тестовая печать
         Integer[] arr = monthDataMap.get(month);
@@ -62,7 +76,7 @@ public class StepTracker {
     }
 
     public void initTestData() {
-        int[] month1 = {10, 20, 30, 10, 0, 0, 100, 100, 100};
+        int[] month1 = {100000, 20, 30, 10, 10, 0, 0, 0, 100, 100, 200, 0, 500, 500};
         int[] month2 = {1000};
         int[] month10 = {0, 0, 0, 0, 400, 500, 600, 700, 800, 0, 0};
         initTestDataFromArr(1, month1);

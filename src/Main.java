@@ -76,8 +76,8 @@ public class Main {
             System.out.printf("%d день: %d, ", i + 1,  monthDate[i]);
         }
         System.out.printf("%d день: %d\n",  cntDays,   monthDate[cntDays-1]);
-        System.out.println("===");
-        stepTracker.printDateTest(month);
+        System.out.println("-----------------------------------------------");
+        stepTracker.printDateTest(month); //тестовая печать
 
         MonthStat monthStat = stepTracker.getMonthStatistics(month);
         System.out.println("Общее количество шагов за месяц " + monthStat.totalSteps);
@@ -85,7 +85,7 @@ public class Main {
         System.out.println("Среднее количество шагов в день " + monthStat.avgSteps);
         System.out.printf("Пройденная дистанция %.1f км\n", Converter.stepsToKm(monthStat.totalSteps));
         System.out.printf("Количество сожжённых килокалорий %.0f \n", Converter.stepsToKcal(monthStat.totalSteps));
-        System.out.println("Лучшая серия");
+        System.out.println("Лучшая серия " + stepTracker.getBestSeries(month));
     }
 
     private static void EditGoalCountStepsForDay() {
